@@ -2,52 +2,55 @@
 # Importing NLTK for natural language processing
 import nltk
 
-from nltk.corpus import stopwords    # For stopwords
-
 # Downloading NLTK data
-nltk.download('stopwords')   # Downloading stopwords data
-nltk.download('punkt')       # Downloading tokenizer data
+nltk.download('stopwords')   # to deal with stopwords data
+nltk.download('punkt')       # to deal with tokenizer data
 
-# Importing the Porter Stemmer for text stemming
+
+from nltk.corpus import stopwords    # to process stopwords
+
+
+# Porter Stemmer for text stemming (reduce complexity of vocabulary)
 from nltk.stem.porter import PorterStemmer
 
-# Importing the string module for handling special characters
+# to handle special characters
 import string
 
 
 
-# Lowercase transformation and text preprocessing function
-def transform_text(text):
+def transform_text(text) -> list:
+    '''Function that process the text received by putting to lowercase, tokenizing,
+      removing special characters/stop words/punctuation'''
 
-    # Creating an instance of the Porter Stemmer
-    ps = PorterStemmer()
+    # instantiating the Porter Stemmer
+    por_stem = PorterStemmer()
     
-    # Transform the text to lowercase
+    # text to lowercase
     text = text.lower()
     
-    # Tokenization using NLTK
+    # tokenization with NLTK
     text = nltk.word_tokenize(text)
     
-    # Removing special characters
+    # special characters removal
     y = []
     for i in text:
         if i.isalnum():
             y.append(i)
             
-    # Removing stop words and punctuation
+    # stop words and punctuation removal
     text = y[:]
     y.clear()
     
-    # Loop through the tokens and remove stopwords and punctuation
+    # loop through the tokens and removing stopwords/punctuation
     for i in text:
         if i not in stopwords.words('english') and i not in string.punctuation:
             y.append(i)
         
-    # Stemming using Porter Stemmer
+    # stemming
     text = y[:]
-    y.clear()
+    y.clear() #empty list
     for i in text:
-        y.append(ps.stem(i))
+        y.append(por_stem.stem(i))
     
-    # Join the processed tokens back into a single string
+    # joining the processed tokens back to one single string
     return " ".join(y)
