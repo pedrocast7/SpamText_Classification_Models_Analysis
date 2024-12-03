@@ -43,6 +43,7 @@ def transform_text(text):
         if i not in stopwords.words('english') and i not in string.punctuation:
             y.append(i)
         
+    
     # Stemming using Porter Stemmer
     text = y[:]
     y.clear()
